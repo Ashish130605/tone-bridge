@@ -3,7 +3,7 @@ from collections.abc import AsyncGenerator
 from app.core.db import Base
 from app.core.config import settings
 
-engine = create_async_engine(settings.DATABASE_URL, future=True)
+engine = create_async_engine(str(settings.SQLALCHEMY_DATABASE_URI), future=True)
 async_session = async_sessionmaker(engine, expire_on_commit=False)
 
 async def create_db_and_tables():

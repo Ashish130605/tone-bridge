@@ -9,10 +9,13 @@ dependencies = [
     "audd>=1.5.15",
     "fastapi>=0.141.0",
     "fastapi-users[sqlalchemy]>=15.0.5",
+    "joblib>=1.5.3",
     "kaggle>=2.2.4",
     "kagglehub>=1.0.2",
     "pandas>=3.0.5",
+    "pgvector>=0.5.0",
     "pydantic-settings>=2.14.2",
     "python-dotenv>=1.2.2",
+    "scikit-learn>=1.9.0",
     "uvicorn[standard]>=0.52.0",
 ]

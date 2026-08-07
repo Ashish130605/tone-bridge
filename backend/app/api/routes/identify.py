@@ -4,9 +4,9 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.db import ListeningEvents
+from app.core.models import ListeningEvents
 from app.api.deps import  get_async_session
-from app.models import Song
+from app.schemas import Song
 
 
 router = APIRouter(prefix="/api", tags=["api"])

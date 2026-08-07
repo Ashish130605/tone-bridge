@@ -8,25 +8,28 @@ from app.core.db import ListeningEvents
 from app.api.deps import  get_async_session
 from app.models import Song
 
-load_dotenv()
 
 router = APIRouter(prefix="/api", tags=["api"])
 audd = AudD(os.getenv("AUDD_API_TOKEN"))
 
 @router.post("/recognise", response_model = Song)
-async def recognise(file: UploadFile, session: AsyncSession = Depends(get_async_session) ):
-
-    read_bytes = await file.read()
+async def recognise(file: UploadFile, session: AsyncSession = Depends(get_async_session) ) -> Song:
 
     if not file.content_type.startswith("audio/"):
         raise HTTPException(status_code=400, detail="File type not supported")
 
+    read_bytes = await file.read()
+
     result = audd.recognize(read_bytes, return_metadata=["apple_music", "spotify"])
+
+    if result is None:
+        raise HTTPException(status_code=400, detail="Could not recognise audio")
+
     event = ListeningEvents(
         title = result.title,
         artist = result.artist,
         album = result.album,
-        apple_link = getattr(result.apple_music, "url", None),
+        apple_link = getattr(result.apple_music, "url", None) if result.apple_music else None,
         spotify_link = f"https://open.spotify.com/track/{result.spotify.id}" if result.spotify else None
     )
     session.add(event)
@@ -35,7 +38,4 @@ async def recognise(file: UploadFile, session: AsyncSession = Depends(get_async_
 
     await file.close()
 
-    if result is None:
-        raise HTTPException(status_code=400, detail="Could not recognise audio")
-
-    return event
+    return Song.model_validate(event)

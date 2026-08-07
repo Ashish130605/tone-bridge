@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
+
 
 class SongsSuggestion(BaseModel):
     title: str
@@ -8,10 +9,11 @@ class SongsSuggestion(BaseModel):
 
 
 class Song(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     title: str
     artist: str
     album: str
     #genre: str
-    apple_link: str
-    spotify_link: str
-    suggestions: list[SongsSuggestion]
+    apple_link: str | None
+    spotify_link: str | None
+    #suggestions: list[SongsSuggestion]

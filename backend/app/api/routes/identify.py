@@ -1,16 +1,14 @@
 from audd import AudD
 from fastapi import UploadFile, HTTPException, APIRouter, Depends
-import os
-from dotenv import load_dotenv
 from sqlalchemy.ext.asyncio import AsyncSession
-
+from app.core.config import settings
 from app.core.models import ListeningEvents
 from app.api.deps import  get_async_session
 from app.schemas import Song
 
 
 router = APIRouter(prefix="/api", tags=["api"])
-audd = AudD(os.getenv("AUDD_API_TOKEN"))
+audd = AudD(settings.AUDD_API_TOKEN)
 
 @router.post("/recognise", response_model = Song)
 async def recognise(file: UploadFile, session: AsyncSession = Depends(get_async_session) ) -> Song:

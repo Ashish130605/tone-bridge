@@ -8,7 +8,6 @@ class Settings(BaseSettings):
     )
     AUDD_API_TOKEN : str
 
-    #DATABASE_URL : str
     POSTGRES_SERVER : str
     POSTGRES_PORT : int = 5432
     POSTGRES_USER : str

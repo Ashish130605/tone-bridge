@@ -32,7 +32,7 @@ class Songs(Base):
     song_year = Column(Integer, nullable=False)
     genre = Column(Text, nullable=False)
     spotify_url = Column(Text, nullable=False)
-    embedding = Column(Vector(10), nullable=False)
+    embedding =  Column(Vector(10), nullable=False)
 
 
 

@@ -2,10 +2,11 @@ from pydantic import BaseModel, ConfigDict
 
 
 class SongsSuggestion(BaseModel):
-    title: str
-    artist: str
-    album: str
-    spotify_link: str
+    model_config = ConfigDict(from_attributes=True)
+    song_title: str
+    artists: str
+    album_name: str
+    spotify_url: str
 
 
 class Song(BaseModel):
@@ -16,4 +17,4 @@ class Song(BaseModel):
     #genre: str
     apple_link: str | None
     spotify_link: str | None
-    #suggestions: list[SongsSuggestion]
+    suggestions: list[SongsSuggestion] = []

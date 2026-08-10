@@ -4,7 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.config import settings
 from app.core.models import ListeningEvents
 from app.api.deps import  get_async_session
-from app.schemas import Song
+from app.schemas import Song, SongsSuggestion
+from app.core import db
 
 
 router = APIRouter(prefix="/api", tags=["api"])
@@ -33,7 +34,13 @@ async def recognise(file: UploadFile, session: AsyncSession = Depends(get_async_
     session.add(event)
     await session.commit()
     await session.refresh(event)
+    embedding =  await db.get_embedding(str(result.title), str(result.artist), session)
+    if embedding is not None:
+        suguestions = await db.get_suggestions(embedding, session)
+    else:
+        suguestions = []
 
-    await file.close()
-
-    return Song.model_validate(event)
+    suggest_models = [SongsSuggestion.model_validate(s) for s in suguestions]
+    response = Song.model_validate(event)
+    response.suggestions = suggest_models
+    return response

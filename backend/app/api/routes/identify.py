@@ -2,8 +2,9 @@ from audd import AudD
 from fastapi import UploadFile, HTTPException, APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.config import settings
-from app.core.models import ListeningEvents
+from app.core.models import ListeningEvents, User
 from app.api.deps import  get_async_session
+from app.core.security import current_active_user
 from app.schemas import Song, SongsSuggestion
 from app.core import db
 
@@ -12,19 +13,24 @@ router = APIRouter(prefix="/api", tags=["api"])
 audd = AudD(settings.AUDD_API_TOKEN)
 
 @router.post("/recognise", response_model = Song)
-async def recognise(file: UploadFile, session: AsyncSession = Depends(get_async_session) ) -> Song:
+async def recognise(file: UploadFile,
+                    user: User = Depends(current_active_user),
+                    session: AsyncSession = Depends(get_async_session) ) -> Song:
 
     if not file.content_type.startswith("audio/"):
         raise HTTPException(status_code=400, detail="File type not supported")
 
-    read_bytes = await file.read()
+    try:
+        read_bytes = await file.read()
+        result = audd.recognize(read_bytes, return_metadata=["apple_music", "spotify"])
 
-    result = audd.recognize(read_bytes, return_metadata=["apple_music", "spotify"])
+    except Exception:
+        raise HTTPException(status_code=503, detail="Service unavailable")
 
     if result is None:
         raise HTTPException(status_code=400, detail="Could not recognise audio")
-
     event = ListeningEvents(
+        user_id= user.id,
         title = result.title,
         artist = result.artist,
         album = result.album,

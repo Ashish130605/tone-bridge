@@ -170,6 +170,10 @@ export function SignUp() {
               Submit
             </button>
           </form>
+
+          <p>Already have an account? 
+            <a href="">Login</a>
+          </p>
         </section>
       )}
     </>

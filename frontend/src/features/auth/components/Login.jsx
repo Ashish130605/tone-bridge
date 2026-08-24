@@ -83,7 +83,7 @@ export function Login() {
               type="email"
               id="email"
               ref={emailRef}
-              placeholder="Enter your email (name@example.com)..."
+              placeholder="Enter your email..."
               onChange={(e) => setEmail(e.target.value)}
               aria-invalid={validEmail ? "false" : "true"}
               aria-describedby="emailnote"
@@ -91,17 +91,6 @@ export function Login() {
               onFocus={() => setEmailFocus(true)}
               onBlur={() => setEmailFocus(false)}
             />
-
-            <p
-              id="uidnote"
-              className={
-                emailFocus && email && !validEmail
-                  ? "instructions"
-                  : "offscreen"
-              }
-            >
-              Please enter a valid email address.
-            </p>
 
             <label htmlFor="password">Password:</label>
             <input
@@ -115,19 +104,6 @@ export function Login() {
               onFocus={() => setPasswordFocus(true)}
               onBlur={() => setPasswordFocus(false)}
             />
-            <p
-              id="pwdnote"
-              className={
-                passwordFocus && password && !validPass
-                  ? "instructions"
-                  : "offscreen"
-              }
-            >
-              Please enter a valid password. <br />
-              Password must contain at least 8 characters, uppercase and
-              lowercase with a symbol. <br />
-            </p>
-
             <button disabled={!validEmail || !validPass ? true : false}>
               Login
             </button>

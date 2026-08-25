@@ -1,7 +1,9 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { apiFetch } from "../../../lib/api-client";
+import AuthContext  from "../context/AuthProvider";
 
 export function Login() {
+  const { setAuth } = useContext(AuthContext);
   const emailRef = useRef();
   const errorRef = useRef();
 
@@ -19,6 +21,7 @@ export function Login() {
   }, [email, password]);
 
   const handleSubmit = async () => {
+    //e.preventDefault();
     try {
       const res = await apiFetch("/auth/jwt/login", {
         method: "POST",
@@ -27,9 +30,10 @@ export function Login() {
           password: password,
         }),
       });
-      localStorage.setItem("access-token", res.access_token);
+      const accessToken = res.access_token;
+      localStorage.setItem("access-token", accessToken); // TODO: implement httpOnly cookie for Authorization
+      setAuth({email, password, accessToken});
       setSuccess(true);
-
       setEmail("");
       setPassword("");
     } catch (error) {
@@ -76,11 +80,12 @@ export function Login() {
               required
             />
             <button>Login</button>
-            <p>
+            
+          </form>
+          <p>
               Dont have an account?
               <a href="">Sign Up</a>
-            </p>
-          </form>
+          </p>
         </section>
       )}
     </>

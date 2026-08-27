@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { apiFetch } from "../../../lib/api-client";
 import './Signup.css';
+import { Link } from "react-router";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX =
@@ -172,7 +173,7 @@ export function SignUp() {
           </form>
 
           <p>Already have an account? 
-            <a href="">Login</a>
+            <Link to={"/login"}>Login!</Link>
           </p>
         </section>
       )}

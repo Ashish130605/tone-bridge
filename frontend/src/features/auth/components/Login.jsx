@@ -1,9 +1,10 @@
-import { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useEffect } from "react";
+import { Link, Navigate } from "react-router";
 import { apiFetch } from "../../../lib/api-client";
-import AuthContext  from "../context/AuthProvider";
+import useAuth from "../../../hooks/useAuth";
 
 export function Login() {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
   const emailRef = useRef();
   const errorRef = useRef();
 
@@ -20,8 +21,8 @@ export function Login() {
     setError("");
   }, [email, password]);
 
-  const handleSubmit = async () => {
-    //e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const res = await apiFetch("/auth/jwt/login", {
         method: "POST",
@@ -32,7 +33,7 @@ export function Login() {
       });
       const accessToken = res.access_token;
       localStorage.setItem("access-token", accessToken); // TODO: implement httpOnly cookie for Authorization
-      setAuth({email, password, accessToken});
+      setAuth({ email, password, accessToken });
       setSuccess(true);
       setEmail("");
       setPassword("");
@@ -41,13 +42,15 @@ export function Login() {
     }
   };
 
+  if(success){
+    return (
+      <Navigate to={"/Home"} />
+    );
+
+  }
+
   return (
     <>
-      {success ? (
-        <section>
-          <h1>Login Success!</h1>
-        </section>
-      ) : (
         <section>
           <p
             ref={errorRef}
@@ -80,14 +83,12 @@ export function Login() {
               required
             />
             <button>Login</button>
-            
           </form>
           <p>
-              Dont have an account?
-              <a href="">Sign Up</a>
+            Dont have an account?
+            <Link to={"/signup"}>Sign up!</Link>
           </p>
         </section>
-      )}
     </>
   );
 }

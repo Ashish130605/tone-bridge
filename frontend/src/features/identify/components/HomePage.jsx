@@ -118,7 +118,7 @@ export function HomePage(){
                 Hello {auth?.email}!
             </h1>
             <p>Click on the button to record and identify the song.</p>
-            <button onClick={isRecording ? startRecording : stopRecodingAndFetchData}>
+            <button onClick={!isRecording ? startRecording : stopRecodingAndFetchData}>
                 {isRecording ? "recording...": "record"}
             </button>
             

@@ -1,7 +1,6 @@
 /*
-/   BUG FIX: record btn not working properly. configure state properly
 /   AudD API SERVICE DOWN. DUMMY object used
-/   TODO: fix bug and uncomment after AudD is live
+/   TODO: uncomment after AudD is live
 */
 
 

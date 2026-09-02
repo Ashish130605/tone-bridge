@@ -4,12 +4,10 @@ import App from "./App.jsx";
 import { AuthProvider } from "./features/auth/context/AuthProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
-    
         <BrowserRouter>
             <AuthProvider>
                 <App />
             </AuthProvider>
-            
         </BrowserRouter>
 
 

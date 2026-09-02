@@ -44,7 +44,7 @@ export function Login() {
 
   if(success){
     return (
-      <Navigate to={"/Home"} />
+      <Navigate to={"/"} />
     );
 
   }

@@ -28,17 +28,23 @@ export function Login() {
         method: "POST",
         body: new URLSearchParams({
           username: email,
-          password: password,
+          password: password
         }),
+        credentials: 'include'
       });
-      const accessToken = res.access_token;
-      localStorage.setItem("access-token", accessToken); // TODO: implement httpOnly cookie for Authorization
-      setAuth({ email, password, accessToken });
-      setSuccess(true);
-      setEmail("");
-      setPassword("");
+      //const accessToken = res.access_token;
+      //localStorage.setItem("access-token", accessToken); // TODO: implement httpOnly cookie for Authorization
+      if(res === null){
+        setAuth({ email });
+        setSuccess(true);
+        setEmail("");
+        setPassword("");
+      }
+
     } catch (error) {
       setError(error.message);
+      console.log(error);
+      
     }
   };
 

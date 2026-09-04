@@ -1,14 +1,20 @@
 import useAuth from "../hooks/useAuth";
-import { Navigate, Outlet} from "react-router";
+import { Navigate, Outlet } from "react-router";
 
 const ProtectedRoute = () => {
-    const {auth} = useAuth();
+  const { auth, loading } = useAuth();
 
-    if(!auth?.email){
-        return <Navigate to={"/login"} replace/>
-    }
+  if (loading)
+    return (
+      <>
+        <h1>Loading...</h1>
+      </>
+    );
+  if (!auth?.email) {
+    return <Navigate to={"/login"} replace />;
+  }
 
-    return <Outlet />
-}
+  return <Outlet />;
+};
 
 export default ProtectedRoute;

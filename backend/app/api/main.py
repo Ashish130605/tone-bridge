@@ -17,5 +17,10 @@ api_router.include_router(
     prefix="/auth",
     tags=["auth"],)
 
+api_router.include_router(
+    fastapi_users.get_users_router(UserRead, UserCreate),
+    prefix="/users",
+    tags=["users"]
+)
 
 api_router.include_router(identify.router)

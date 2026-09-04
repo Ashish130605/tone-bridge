@@ -7,7 +7,9 @@ from fastapi_users.authentication import BearerTransport, JWTStrategy, Authentic
 from app.api.deps import get_user_db
 from app.core.config import settings
 from app.core.models import User
+import re
 
+PWD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     reset_password_token_secret = settings.JWT_SECRET
@@ -16,9 +18,9 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     async def validate_password(
         self, password: str, user: schemas.UC | models.UP
     ) -> None:
-        if (len(password) < 8) and (not password.isalnum()):
+        if re.match(PWD_REGEX, password) is None:
             raise InvalidPasswordException(
-                reason="Password must contain at least 8 characters long and at least 1 special character"
+                reason="Password must contain at least 8 characters long with upper and lowercase characters and at least 1 special character"
             )
 
 bearer_transport = BearerTransport(tokenUrl="auth/jwt/login")

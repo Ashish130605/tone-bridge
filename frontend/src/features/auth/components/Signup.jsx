@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { apiFetch } from "../../../lib/api-client";
-import './Signup.css';
+import { FormField } from "../../../components/FormField";
+import { Button } from "../../../components/Button";
 import { Link } from "react-router";
+import { Navigate } from "react-router";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX =
@@ -76,12 +78,7 @@ export function SignUp() {
   return (
     <>
       {success ? (
-        <section>
-          <h1>Success!</h1>
-          <p>
-            <a href="#">Sign In</a>
-          </p>
-        </section>
+          <Navigate to={"/login"} replace />
       ) : (
         <section>
           <p
@@ -94,10 +91,10 @@ export function SignUp() {
 
           <h1>Register</h1>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="email">Email:</label>
-            <input
+            <FormField 
+              id = "email"
+              label = "Email"
               type="email"
-              id="email"
               ref={emailRef}
               placeholder="Enter your email (name@example.com)..."
               onChange={(e) => setEmail(e.target.value)}
@@ -106,48 +103,32 @@ export function SignUp() {
               required
               onFocus={() => setEmailFocus(true)}
               onBlur={() => setEmailFocus(false)}
-            />
+              noteid = "uidnote"
+              note = "Please enter a valid email address."
+              showNote = {emailFocus && email && !validEmail}/>
 
-            <p
-              id="uidnote"
-              className={
-                emailFocus && email && !validEmail
-                  ? "instructions"
-                  : "offscreen"
-              }
-            >
-              Please enter a valid email address.
-            </p>
+          
+          <FormField
+            id = "password"
+            label= "Password"
+            type="password"
+            placeholder="Enter your password..."
+            onChange={(e) => setPassword(e.target.value)}
+            aria-invalid={validPass ? "false" : "true"}
+            aria-describedby="pwdnote"
+            required
+            onFocus={() => setPasswordFocus(true)}
+            onBlur={() => setPasswordFocus(false)}
+            noteid="pwdnote"
+            note = {"Please enter a valid password. Password must contain at least 8 characters, uppercase and lowercase with a symbol."} 
+            showNote = {passwordFocus && password && !validPass}/>
+            
+           
 
-            <label htmlFor="password">Password:</label>
-            <input
+            <FormField 
+              id = "confirm_password"
+              label= "Confirm Password"
               type="password"
-              id="password"
-              placeholder="Enter your password..."
-              onChange={(e) => setPassword(e.target.value)}
-              aria-invalid={validPass ? "false" : "true"}
-              aria-describedby="pwdnote"
-              required
-              onFocus={() => setPasswordFocus(true)}
-              onBlur={() => setPasswordFocus(false)}
-            />
-            <p
-              id="pwdnote"
-              className={
-                passwordFocus && password && !validPass
-                  ? "instructions"
-                  : "offscreen"
-              }
-            >
-              Please enter a valid password. <br />
-              Password must contain at least 8 characters, uppercase and
-              lowercase with a symbol. <br />
-            </p>
-
-            <label htmlFor="confirm_password">Confirm Password:</label>
-            <input
-              type="password"
-              id="confirm_password"
               placeholder="Enter your password..."
               onChange={(e) => setMatchPwd(e.target.value)}
               aria-invalid={validPass ? "false" : "true"}
@@ -155,21 +136,15 @@ export function SignUp() {
               required
               onFocus={() => setMatchFocus(true)}
               onBlur={() => setMatchFocus(false)}
-            />
-            <p
-              id="confirmnote"
-              className={
-                matchFocus && !validMatch ? "instructions" : "offscreen"
-              }
-            >
-              Password does'nt match.
-            </p>
+              noteid = "confirmnote"
+              note = "Password does'nt match."
+              showNote = {matchFocus && !validMatch}/>
 
-            <button
+            <Button
               disabled={!validEmail || !validPass || !validMatch ? true : false}
             >
               Submit
-            </button>
+            </Button>
           </form>
 
           <p>Already have an account? 

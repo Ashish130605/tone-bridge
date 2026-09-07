@@ -2,6 +2,8 @@ import { useRef, useState, useEffect } from "react";
 import { Link, Navigate } from "react-router";
 import { apiFetch } from "../../../lib/api-client";
 import useAuth from "../../../hooks/useAuth";
+import { FormField } from "../../../components/FormField";
+import { Button } from "../../../components";
 
 export function Login() {
   const { setAuth } = useAuth();
@@ -62,27 +64,27 @@ export function Login() {
 
           <h1>Login</h1>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="email">Email:</label>
-            <input
+            <FormField 
+              id = "email"
+              label= "Email"
               type="email"
-              id="email"
               ref={emailRef}
               placeholder="Enter your email..."
               onChange={(e) => setEmail(e.target.value)}
               aria-describedby="emailnote"
-              required
+              required           
             />
 
-            <label htmlFor="password">Password:</label>
-            <input
+            <FormField 
+              id = "password"
+              label= "Password"
               type="password"
-              id="password"
               placeholder="Enter your password..."
               onChange={(e) => setPassword(e.target.value)}
               aria-describedby="pwdnote"
               required
             />
-            <button>Login</button>
+            <Button>Login</Button>
           </form>
           <p>
             Dont have an account?

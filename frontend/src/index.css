@@ -1,0 +1,9 @@
+:root{
+    --gradient : linear-gradient(90deg, #D91EFF 0%,  #1E55FF 100%);
+}
+body{
+    background-image: var(--gradient);
+    margin: 0;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}

@@ -4,6 +4,7 @@ import { apiFetch } from "../../../lib/api-client";
 import useAuth from "../../../hooks/useAuth";
 import { FormField } from "../../../components/FormField";
 import { Button } from "../../../components";
+import styles from "./Auth.module.css"
 
 export function Login() {
   const { setAuth } = useAuth();
@@ -53,17 +54,16 @@ export function Login() {
 
   return (
     <>
-        <section>
-          <p
-            ref={errorRef}
-            className={error ? "error" : "offscreen"}
-            aria-live="assertive"
-          >
-            {error}
-          </p>
-
+        <div className={styles["card-container"]}>
           <h1>Login</h1>
-          <form onSubmit={handleSubmit}>
+            <p
+              ref={errorRef}
+              className={error ? styles.error : styles.offscreen}
+              aria-live="assertive"
+            >
+              {error}
+            </p>
+          <form className={styles.loginForm} onSubmit={handleSubmit}>
             <FormField 
               id = "email"
               label= "Email"
@@ -90,7 +90,7 @@ export function Login() {
             Dont have an account?
             <Link to={"/signup"}>Sign up!</Link>
           </p>
-        </section>
+        </div>
     </>
   );
 }

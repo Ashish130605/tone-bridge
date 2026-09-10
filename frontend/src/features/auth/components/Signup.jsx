@@ -4,6 +4,7 @@ import { FormField } from "../../../components/FormField";
 import { Button } from "../../../components/Button";
 import { Link } from "react-router";
 import { Navigate } from "react-router";
+import styles from "./Auth.module.css";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX =
@@ -80,17 +81,17 @@ export function SignUp() {
       {success ? (
           <Navigate to={"/login"} replace />
       ) : (
-        <section>
+        <div className={styles["card-container"]}>
           <p
             ref={errorRef}
-            className={error ? "error" : "offscreen"}
+            className={error ? styles.error : styles.offscreen}
             aria-live="assertive"
           >
             {error}
           </p>
 
           <h1>Register</h1>
-          <form onSubmit={handleSubmit}>
+          <form className={styles.loginForm} onSubmit={handleSubmit}>
             <FormField 
               id = "email"
               label = "Email"
@@ -150,7 +151,7 @@ export function SignUp() {
           <p>Already have an account? 
             <Link to={"/login"}>Login!</Link>
           </p>
-        </section>
+        </div>
       )}
     </>
   );

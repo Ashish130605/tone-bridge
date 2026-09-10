@@ -1,9 +1,27 @@
 :root{
-    --gradient : linear-gradient(90deg, #D91EFF 0%,  #1E55FF 100%);
+    --primary-gradient : linear-gradient(135deg, #D91EFF 0%,  #1E55FF 100%);
+
+    --secondary-gradient : linear-gradient(90deg, #D91EFF 0%,  #1E55FF 100%);
 }
 body{
-    background-image: var(--gradient);
+    background: var(--primary-gradient) no-repeat center center fixed;
+    background-size: cover;
     margin: 0;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    max-width: 100%;
+}
+#root{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.content{
+    flex: 1;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    
 }

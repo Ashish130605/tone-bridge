@@ -7,13 +7,15 @@ function App() {
   return (
     <>
       <NavBar />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<HomePage />} />
-        </Route>
-      </Routes>
+      <main className="content">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<HomePage />} />
+          </Route>
+        </Routes>
+      </main>
     </>
   );
 }

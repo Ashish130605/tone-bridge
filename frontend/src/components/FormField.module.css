@@ -1,0 +1,26 @@
+.field-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.form-label{
+    margin-bottom: 5px;
+}
+.form-input{
+    padding: 10px;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 1px;
+    font-size: 1.2rem;
+}
+.form-input:focus{
+    outline: none;
+    border-color: #D91EFF;
+    border-width: 2px;
+}
+.instructions{
+    color:red;
+}
+.offscreen{
+    display: none;
+}

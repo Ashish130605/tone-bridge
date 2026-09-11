@@ -1,8 +1,9 @@
 import styles from "./Button.module.css"
-export function Button({children , ...props}) {
+export function Button({variant, children , ...props}) {
+    const className = `${styles.button} ${styles[variant]}`;
     return (
 
-            <button className={styles.button} {...props}>
+            <button className={className} {...props}>
                 {children}
             </button>
 

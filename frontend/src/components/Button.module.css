@@ -35,9 +35,6 @@
 .mainPageButton:active{
     box-shadow: 0 0 60px 20px rgba(255, 182, 39, 0.85);
 }
-
-/* Recording / active toggle state: red shade, bigger, red glow.
-   composes pulls in the base circle geometry so it stays DRY. */
 .mainPageButtonActive{
     composes: mainPageButton;
     background: radial-gradient(circle, #FF3B3B 0%, #8B0000 100%);

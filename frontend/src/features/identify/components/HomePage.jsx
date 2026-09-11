@@ -141,12 +141,9 @@ export function HomePage() {
       
       ) : (
         <section>
-          <h1>Hello {auth?.email}!</h1>
-          <p>Click on the button to record and identify the song.</p>
           <Button
-            onClick={!isRecording ? startRecording : stopRecodingAndFetchData}
+            variant = {isRecording ? 'mainPageButtonActive': 'mainPageButton'} onClick={!isRecording ? startRecording : stopRecodingAndFetchData}
           >
-            {isRecording ? "recording..." : "record"}
           </Button>
         </section>
       )}

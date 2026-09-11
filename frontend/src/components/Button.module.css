@@ -7,14 +7,42 @@
     cursor: pointer;
     font-size: 1rem;
     font-weight: 700;
-    transition: 0.2s;
+    transition: 0.3s;
 }
 .button:hover{
     opacity: 0.8;
     transform: scale(1.1);
 
 }
+.button:active{
+    transform: scale(1);
+}
 .button:disabled{
     cursor:not-allowed;
     font-size: 1rem;
+}
+.mainPageButton{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(#FF6B4A 0%,#00000065 100%);
+    box-shadow: 0 0 0 rgba(255, 182, 39, 0);
+    transition: box-shadow 0.5s ease, transform 0.2s ease, background 0.4s ease, width 0.3s ease, height 0.3s ease;
+}
+.mainPageButton:hover{
+    box-shadow: 0 0 40px 10px rgba(255, 182, 39, 0.6);
+}
+.mainPageButton:active{
+    box-shadow: 0 0 60px 20px rgba(255, 182, 39, 0.85);
+}
+
+/* Recording / active toggle state: red shade, bigger, red glow.
+   composes pulls in the base circle geometry so it stays DRY. */
+.mainPageButtonActive{
+    composes: mainPageButton;
+    background: radial-gradient(circle, #FF3B3B 0%, #8B0000 100%);
+    box-shadow: 0 0 50px 15px rgba(255, 45, 45, 0.75);
+}
+.mainPageButtonActive:hover{
+    box-shadow: 0 0 60px 20px rgba(255, 45, 45, 0.9);
 }

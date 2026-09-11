@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { SongCard, Button} from "../../../components";
 import styles from "./HomePage.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMusic } from "@fortawesome/free-solid-svg-icons";
 //import { apiFetch } from "../../../lib/api-client";
 
 //DUMMY DATA FOR TESTING ONLY - TO BE REMOVED AFTER API SERVICE IS UP
@@ -144,6 +146,7 @@ export function HomePage() {
           <Button
             variant = {isRecording ? 'mainPageButtonActive': 'mainPageButton'} onClick={!isRecording ? startRecording : stopRecodingAndFetchData}
           >
+            <FontAwesomeIcon icon={faMusic} size="2x"/>
           </Button>
         </section>
       )}

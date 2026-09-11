@@ -10,12 +10,14 @@
 
 }
 .logo{
+    display: flex;
     font-size: 1.5rem;
     padding: 0.5rem 20px;
     border: 1px solid rgba(211, 211, 211, 0.555);
     border-radius: 30px;
     background-color: rgba(211, 211, 211, 0.305);
     margin-left: 5px;
+    gap: 5px;
 
 }
 .links{

@@ -5,6 +5,7 @@ import { Button } from "../../../components/Button";
 import { Link } from "react-router";
 import { Navigate } from "react-router";
 import styles from "./Auth.module.css";
+import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX =
@@ -95,6 +96,7 @@ export function SignUp() {
             <FormField 
               id = "email"
               label = "Email"
+              icon = {faEnvelope}
               type="email"
               ref={emailRef}
               placeholder="Enter your email (name@example.com)..."
@@ -112,6 +114,7 @@ export function SignUp() {
           <FormField
             id = "password"
             label= "Password"
+            icon = {faLock}
             type="password"
             placeholder="Enter your password..."
             onChange={(e) => setPassword(e.target.value)}
@@ -129,6 +132,7 @@ export function SignUp() {
             <FormField 
               id = "confirm_password"
               label= "Confirm Password"
+              icon = {faLock}
               type="password"
               placeholder="Enter your password..."
               onChange={(e) => setMatchPwd(e.target.value)}

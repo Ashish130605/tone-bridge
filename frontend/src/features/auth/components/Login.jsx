@@ -5,6 +5,7 @@ import useAuth from "../../../hooks/useAuth";
 import { FormField } from "../../../components/FormField";
 import { Button } from "../../../components";
 import styles from "./Auth.module.css"
+import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 
 export function Login() {
   const { setAuth } = useAuth();
@@ -67,6 +68,7 @@ export function Login() {
             <FormField 
               id = "email"
               label= "Email"
+              icon = {faEnvelope}
               type="email"
               ref={emailRef}
               placeholder="Enter your email..."
@@ -78,6 +80,7 @@ export function Login() {
             <FormField 
               id = "password"
               label= "Password"
+              icon = {faLock}
               type="password"
               placeholder="Enter your password..."
               onChange={(e) => setPassword(e.target.value)}

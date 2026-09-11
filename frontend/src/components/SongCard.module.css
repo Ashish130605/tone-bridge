@@ -8,6 +8,7 @@
     padding: 15px;
     gap: 5px;
     border-radius: 10px;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.200);
 
 }
 .listCard{
@@ -63,10 +64,18 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    background-color: blue;
-    color: white;
     transition: 0.2s;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.200);
 }
+.spotifylink{
+    color: white;
+    background-color: var(--spotify-green, #1ED760);
+}
+.applelink{
+    color:black;
+    background-color: var(--Apple-pink , #FA2D48);
+}
+
 .cardLinks a:hover{
     transform: scale(1.1);
 }

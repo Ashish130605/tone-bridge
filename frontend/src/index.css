@@ -2,6 +2,8 @@
     --primary-gradient : linear-gradient(135deg, #D91EFF 0%,  #1E55FF 100%);
 
     --secondary-gradient : linear-gradient(90deg, #D91EFF 0%,  #1E55FF 100%);
+    --spotify-green: #1ED760;
+    --Apple-pink: #FA2D48
 }
 body{
     background: var(--primary-gradient) no-repeat center center fixed;

@@ -55,7 +55,7 @@ export function HomePage() {
     mediaRecorder.stop();
     setIsRecording(false);
     try {
-      const response = await apiFetch("api/recognise", {
+      const response = await apiFetch("/api/recognise", {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",

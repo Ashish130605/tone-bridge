@@ -42,18 +42,14 @@ export function HomePage() {
                         body: formData,
                     });
                     setData(response);
-                    console.log(data);
                     setSuccess(true);
-                    } catch (error) {
-                    console.log(error.message);
-                    console.log(audioBlob);
-                    
-                    
+                    } catch (e) {
+                      setError(e.message);
                     }
           };
         })
         .catch((error) => {
-          console.error("Error accessing microphone:", error);
+          alert("Error accessing microphone:", error);
         });
     }
   }, [audioStream]);
@@ -107,7 +103,9 @@ export function HomePage() {
             ))}
           </ul>
         </section>
-      ) : null}
+      ) : (
+        <h2>{error}</h2>
+      )}
     </>
   );
 }

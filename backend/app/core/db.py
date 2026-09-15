@@ -14,7 +14,7 @@ async def get_embedding(title: str, artist: str, session: AsyncSession) -> list[
                 Songs.artists.ilike(f"%{artist}%")).order_by(Songs.song_year.asc()).limit(1)
 
     result = await session.execute(stmt)
-    return list(result.scalars().one_or_none())
+    return list(result.scalars().one_or_none()) if result.scalars().one_or_none() else None
 
 async def get_suggestions(embedding : list[float], session: AsyncSession) -> list[Songs]:
     stmt = select(Songs).order_by(Songs.embedding.cosine_distance(embedding)).limit(3)

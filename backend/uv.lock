@@ -134,20 +134,6 @@ wheels = [
 ]
 
 [[package]]
-name = "audd"
-version = "1.5.15"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "anyio" },
-    { name = "httpx" },
-    { name = "pydantic" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c8/3a/6a4b4111aeb19ad3ac2ce32e58d9e0af8a3b783f22eac3aea452196d5bb3/audd-1.5.15.tar.gz", hash = "sha256:5915e397b18654b3a554ef90aa01f6139072fd67dc448517a6619b6a40fca451", size = 36947, upload-time = "2026-07-12T22:41:44.395Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/c0/18/a5946ae7831ebd38169b92e1afcff0c7c0b341174f9a09ed79d5092a0fa8/audd-1.5.15-py3-none-any.whl", hash = "sha256:c8bf770e8ea09c466f0685860d936af19f5aff5c56ed37782a18acc1c434ba3d", size = 42234, upload-time = "2026-07-12T22:41:43.265Z" },
-]
-
-[[package]]
 name = "bcrypt"
 version = "5.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1426,7 +1412,6 @@ source = { virtual = "." }
 dependencies = [
     { name = "aiosqlite" },
     { name = "asyncpg" },
-    { name = "audd" },
     { name = "fastapi" },
     { name = "fastapi-users", extra = ["sqlalchemy"] },
     { name = "httpx" },
@@ -1446,7 +1431,6 @@ dependencies = [
 requires-dist = [
     { name = "aiosqlite", specifier = ">=0.22.1" },
     { name = "asyncpg", specifier = ">=0.31.0" },
-    { name = "audd", specifier = ">=1.5.15" },
     { name = "fastapi", specifier = ">=0.141.0" },
     { name = "fastapi-users", extras = ["sqlalchemy"], specifier = ">=15.0.5" },
     { name = "httpx", specifier = ">=0.28.1" },

@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     )
     JWT_SECRET : str
     AUDD_API_TOKEN : str
+    AUDD_API_URL: str
     FRONTEND_URL : str
 
     POSTGRES_SERVER : str

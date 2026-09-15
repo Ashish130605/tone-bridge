@@ -7,9 +7,8 @@ export function HomePage() {
   const [isRecording, setIsRecording] = useState(false);
   const [audioStream, setAudioStream] = useState(null);
   const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [audioBlob, setAudioBlob] = useState(null);
-  const [url, setUrl] = useState(null);
-  const [audioFormData, setAudioFormData] = useState(null);
+  const [audioBlob, setAudioBlob] = useState();
+  const [url, setUrl] = useState(null)
   const [data, setData] = useState({});
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -30,14 +29,27 @@ export function HomePage() {
             }
           };
 
-          mediaRecorder.onstop = () => {
+          mediaRecorder.onstop = async () => {
             const b = new Blob(audio, { type: "audio/wav" });
             setAudioBlob(b);
             const audioUrl = URL.createObjectURL(b);
             setUrl(audioUrl);
             const formData = new FormData();
-            formData.append("file", b, "recording");
-            setAudioFormData(formData);
+            formData.append("file", b, "recording.wav");
+            try {
+                    const response = await apiFetch("/api/recognise", {
+                        method: "POST",
+                        body: formData,
+                    });
+                    setData(response);
+                    console.log(data);
+                    setSuccess(true);
+                    } catch (error) {
+                    console.log(error.message);
+                    console.log(audioBlob);
+                    
+                    
+                    }
           };
         })
         .catch((error) => {
@@ -54,20 +66,7 @@ export function HomePage() {
   const stopRecodingAndFetchData = async () => {
     mediaRecorder.stop();
     setIsRecording(false);
-    try {
-      const response = await apiFetch("/api/recognise", {
-        method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        body: audioFormData,
-      });
-      setData(response);
-      console.log(data);
-      setSuccess(true);
-    } catch (error) {
-      console.log(error.message);
-    }
+
   };
 
   return (

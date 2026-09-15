@@ -98,12 +98,11 @@ export function HomePage() {
           <p>You might also like.</p>
           <ul className="suggestions-list">
             {data?.suggestions.map((suggestions) => (
-              <li key={`${suggestions.artist}-${suggestions.album}`}>
-                <p>{suggestions.title}</p>
-                <p>{suggestions.artist}</p>
-                <p>{suggestions.album}</p>
-                <a href={suggestions.apple_link}></a>
-                <a href={suggestions.spotify_link}></a>
+              <li key={`${suggestions.artists}-${suggestions.album_name}`}>
+                <p>{suggestions.song_title}</p>
+                <p>{suggestions.artists}</p>
+                <p>{suggestions.album_name}</p>
+                <a href={suggestions.spotify_url}>Spotify</a>
               </li>
             ))}
           </ul>

@@ -55,5 +55,8 @@ async def recognise(file: UploadFile,
 
     suggest_models = [SongsSuggestion.model_validate(s) for s in suguestions]
     response = Song.model_validate(event)
+    spotify = response_data["result"].get("spotify")
+    images = (spotify or {}).get("album", {}).get("images", [])
+    response.album_cover_url = images[1]["url"] if images else None
     response.suggestions = suggest_models
     return response

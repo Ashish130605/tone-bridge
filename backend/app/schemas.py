@@ -27,4 +27,5 @@ class Song(BaseModel):
     #genre: str
     apple_link: str | None
     spotify_link: str | None
+    album_cover_url: str | None = None
     suggestions: list[SongsSuggestion] = []

@@ -1,4 +1,4 @@
-from audd import AudD
+import httpx
 from fastapi import UploadFile, HTTPException, APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.config import settings
@@ -10,7 +10,6 @@ from app.core import db
 
 
 router = APIRouter(prefix="/api", tags=["api"])
-audd = AudD(settings.AUDD_API_TOKEN)
 
 @router.post("/recognise", response_model = Song)
 async def recognise(file: UploadFile,
@@ -22,25 +21,33 @@ async def recognise(file: UploadFile,
 
     try:
         read_bytes = await file.read()
-        result = audd.recognize(read_bytes, return_metadata=["apple_music", "spotify"])
+        async with httpx.AsyncClient() as client:
+            files = {"file": read_bytes}
+            data={
+                'api_token': settings.AUDD_API_TOKEN,
+                'return': 'apple_music,spotify',
+            }
+            response = await client.post(settings.AUDD_API_URL, data=data, files=files)
+            response.raise_for_status()
+            response_data = response.json()
 
     except Exception:
         raise HTTPException(status_code=503, detail="Service unavailable")
 
-    if result is None:
+    if response_data is None:
         raise HTTPException(status_code=400, detail="Could not recognise audio")
     event = ListeningEvents(
         user_id= user.id,
-        title = result.title,
-        artist = result.artist,
-        album = result.album,
-        apple_link = getattr(result.apple_music, "url", None) if result.apple_music else None,
-        spotify_link = f"https://open.spotify.com/track/{result.spotify.id}" if result.spotify else None
+        title =  response_data["result"]["title"],
+        artist = response_data["result"]["artist"],
+        album = response_data["result"]["album"],
+        apple_link = response_data["result"]["apple_music"]["url"] if "apple_music" in response_data["result"] else None,
+        spotify_link = response_data["result"]["external_urls"]["spotify"] if "spotify" in response_data["result"] else None,
     )
     session.add(event)
     await session.commit()
     await session.refresh(event)
-    embedding =  await db.get_embedding(str(result.title), str(result.artist), session)
+    embedding =  await db.get_embedding(response_data["result"]["title"], response_data["result"]["artist"], session)
     if embedding is not None:
         suguestions = await db.get_suggestions(embedding, session)
     else:

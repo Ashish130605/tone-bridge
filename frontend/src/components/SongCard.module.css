@@ -1,0 +1,81 @@
+.baseCard{
+    width: 300px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    background-color: rgba(0, 0, 0, 0.503);
+    padding: 15px;
+    gap: 5px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.200);
+
+}
+.listCard{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+.albumCover{
+    border: 2px solid lightgray;
+    border-radius: 10px;
+    width: 100%;
+    background-color: aliceblue;
+    aspect-ratio: 1 / 1;
+}
+.cardContent{
+    width: 100%;
+    display: grid;
+    place-items: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    gap: 5px;
+
+}
+
+.cardContent p, .cardContent h4{
+    margin: 0;
+}
+.title{
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.artist{
+    font-size: 0.9rem;
+}
+.album{
+    font-size: 0.8rem;
+}
+.cardLinks{
+    display: flex;
+    padding: 10px;
+    gap: 20px;
+    text-align: center;
+
+
+}
+.cardLinks a{
+    width: 40px;
+    height: 40px;;
+    display: flex;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    transition: 0.2s;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.200);
+}
+.spotifylink{
+    color: white;
+    background-color: var(--spotify-green, #1ED760);
+}
+.applelink{
+    color:black;
+    background-color: var(--Apple-pink , #FA2D48);
+}
+
+.cardLinks a:hover{
+    transform: scale(1.1);
+}

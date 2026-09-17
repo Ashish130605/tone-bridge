@@ -2,6 +2,10 @@ import { useRef, useState, useEffect } from "react";
 import { Link, Navigate } from "react-router";
 import { apiFetch } from "../../../lib/api-client";
 import useAuth from "../../../hooks/useAuth";
+import { FormField } from "../../../components/FormField";
+import { Button } from "../../../components";
+import styles from "./Auth.module.css";
+import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 
 export function Login() {
   const { setAuth } = useAuth();
@@ -39,7 +43,9 @@ export function Login() {
         setPassword("");
       }
     } catch (error) {
-      setError(error.message);
+      if (error.message === "400") {
+        setError("Email or password is incorrect.");
+      }
     }
   };
 
@@ -49,21 +55,21 @@ export function Login() {
 
   return (
     <>
-      <section>
+      <div className={styles["card-container"]}>
+        <h1>Login</h1>
         <p
           ref={errorRef}
-          className={error ? "error" : "offscreen"}
+          className={error ? styles.error : styles.offscreen}
           aria-live="assertive"
         >
           {error}
         </p>
-
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
+        <form className={styles.loginForm} onSubmit={handleSubmit}>
+          <FormField
             id="email"
+            label="Email"
+            icon={faEnvelope}
+            type="email"
             ref={emailRef}
             placeholder="Enter your email..."
             onChange={(e) => setEmail(e.target.value)}
@@ -71,22 +77,23 @@ export function Login() {
             required
           />
 
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
+          <FormField
             id="password"
+            label="Password"
+            icon={faLock}
+            type="password"
             placeholder="Enter your password..."
             onChange={(e) => setPassword(e.target.value)}
             aria-describedby="pwdnote"
             required
           />
-          <button>Login</button>
+          <Button>Login</Button>
         </form>
         <p>
           Dont have an account?
           <Link to={"/signup"}>Sign up!</Link>
         </p>
-      </section>
+      </div>
     </>
   );
 }

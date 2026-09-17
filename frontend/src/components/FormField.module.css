@@ -1,0 +1,42 @@
+.field-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.form-label{
+    margin-bottom: 5px;
+}
+.input-wrapper{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.input-wrapper svg{
+    position: absolute;
+    left: 12px;
+    color: #888;
+    pointer-events: none;
+}
+.form-input{
+    flex: 1;
+    box-sizing: border-box;
+    padding: 10px;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 1px;
+    font-size: 1.2rem;
+}
+.input-wrapper:has(svg) .form-input{
+    padding-left: 34px;
+}
+.form-input:focus{
+    outline: none;
+    border-color: #D91EFF;
+    border-width: 2px;
+}
+.instructions{
+    color:red;
+}
+.offscreen{
+    display: none;
+}

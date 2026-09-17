@@ -1,0 +1,23 @@
+.card-container{
+    max: width 400px;
+    display: grid;
+    place-items: center;
+    background-color: white;
+    color: black;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.200);
+}
+.offscreen{
+    display: none;
+}
+.error{
+    color: red;
+}
+.loginForm{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    gap: 10px;
+    width: 100%;
+}

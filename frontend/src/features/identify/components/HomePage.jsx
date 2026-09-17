@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import useAuth from "../../../hooks/useAuth";
+import { SongCard, Button} from "../../../components";
+import styles from "./HomePage.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMusic } from "@fortawesome/free-solid-svg-icons";
 import { apiFetch } from "../../../lib/api-client";
 
 export function HomePage() {
@@ -62,49 +66,46 @@ export function HomePage() {
   const stopRecodingAndFetchData = async () => {
     mediaRecorder.stop();
     setIsRecording(false);
-
   };
+
+  const resetStates = ()=>{
+    setSuccess(false);
+    setAudioStream(null);
+    setAudioBlob(null);
+  }
 
   return (
     <>
-      <h1>Hello {auth?.email}!</h1>
-      <p>Click on the button to record and identify the song.</p>
-      <button
-        onClick={!isRecording ? startRecording : stopRecodingAndFetchData}
-      >
-        {isRecording ? "recording..." : "record"}
-      </button>
-
       {success ? (
         <section>
-          <audio src={url} controls></audio>
           <h3>Song identified</h3>
-          <ul className="song-list">
-            <li className="song-title">name: {data?.title}</li>
-            <li className="song-artist">artist: {data?.artist}</li>
-            <li className="song-album">album: {data?.album}</li>
-            <li className="apple-link">
-              <a href={data?.apple_link}>Apple</a>
-            </li>
-            <li className="spotify-link">
-              <a href={data?.spotify_link}>Spotify</a>
-            </li>
-          </ul>
+
+          <SongCard data={data}/>
+
+          <hr />
 
           <p>You might also like.</p>
-          <ul className="suggestions-list">
+          <ul className={styles["suggestions-list"]}>
             {data?.suggestions.map((suggestions) => (
-              <li key={`${suggestions.artists}-${suggestions.album_name}`}>
-                <p>{suggestions.song_title}</p>
-                <p>{suggestions.artists}</p>
-                <p>{suggestions.album_name}</p>
-                <a href={suggestions.spotify_url}>Spotify</a>
+              <li key={suggestions.title}>
+                  <SongCard variant="listCard" data={suggestions} />
+                  <hr />
               </li>
+
             ))}
+
           </ul>
+          <Button onClick= {resetStates}>Guess Again</Button>
         </section>
+      
       ) : (
-        <h2>{error}</h2>
+        <section>
+          <Button
+            variant = {isRecording ? 'mainPageButtonActive': 'mainPageButton'} onClick={!isRecording ? startRecording : stopRecodingAndFetchData}
+          >
+            <FontAwesomeIcon icon={faMusic} size="2x"/>
+          </Button>
+        </section>
       )}
     </>
   );

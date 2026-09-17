@@ -6,7 +6,7 @@ export function SongCard({variant , data}) {
     return(
         <article className={className}>
                 <div className={styles.albumCover}>
-
+                    <img src={data?.album_cover_url} alt="Album Cover"/>
                 </div>
                 
                 <div className={styles.cardContent}>
@@ -15,10 +15,10 @@ export function SongCard({variant , data}) {
                     <p className={styles.album}>{data?.album}</p>
                 </div>
                 <div className={styles.cardLinks}>
-                    <a className ={styles.spotifylink} href={data.spotify_link} aria-label="Listen on Spotify">
+                    <a className ={styles.spotifylink} href={data?.spotify_link} aria-label="Listen on Spotify">
                         <FontAwesomeIcon icon={faSpotify} />
                     </a>
-                    <a className ={styles.applelink} href={data.apple_link} aria-label="Listen on Apple Music">
+                    <a className ={styles.applelink} href={data?.apple_link} aria-label="Listen on Apple Music">
                         <FontAwesomeIcon icon={faApple} />
                     </a>
                 </div>

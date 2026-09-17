@@ -59,14 +59,13 @@ export function SignUp() {
       return;
     }
     try {
-      const res = await apiFetch("/auth/register", {
+      await apiFetch("/auth/register", {
         method: "POST",
         body: JSON.stringify({
           email: email,
           password: password,
         }),
       });
-      console.log(res);
       setSuccess(true);
 
       setEmail("");

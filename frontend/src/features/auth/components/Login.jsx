@@ -4,7 +4,7 @@ import { apiFetch } from "../../../lib/api-client";
 import useAuth from "../../../hooks/useAuth";
 import { FormField } from "../../../components/FormField";
 import { Button } from "../../../components";
-import styles from "./Auth.module.css"
+import styles from "./Auth.module.css";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 
 export function Login() {
@@ -42,58 +42,57 @@ export function Login() {
       setEmail("");
       setPassword("");
     } catch (error) {
-      setError(error.message);
+      if (error.message === "400") {
+        setError("Email or password is incorrect.");
+      }
     }
   };
 
-  if(success){
-    return (
-      <Navigate to={"/"} />
-    );
-
+  if (success) {
+    return <Navigate to={"/"} />;
   }
 
   return (
     <>
-        <div className={styles["card-container"]}>
-          <h1>Login</h1>
-            <p
-              ref={errorRef}
-              className={error ? styles.error : styles.offscreen}
-              aria-live="assertive"
-            >
-              {error}
-            </p>
-          <form className={styles.loginForm} onSubmit={handleSubmit}>
-            <FormField 
-              id = "email"
-              label= "Email"
-              icon = {faEnvelope}
-              type="email"
-              ref={emailRef}
-              placeholder="Enter your email..."
-              onChange={(e) => setEmail(e.target.value)}
-              aria-describedby="emailnote"
-              required           
-            />
+      <div className={styles["card-container"]}>
+        <h1>Login</h1>
+        <p
+          ref={errorRef}
+          className={error ? styles.error : styles.offscreen}
+          aria-live="assertive"
+        >
+          {error}
+        </p>
+        <form className={styles.loginForm} onSubmit={handleSubmit}>
+          <FormField
+            id="email"
+            label="Email"
+            icon={faEnvelope}
+            type="email"
+            ref={emailRef}
+            placeholder="Enter your email..."
+            onChange={(e) => setEmail(e.target.value)}
+            aria-describedby="emailnote"
+            required
+          />
 
-            <FormField 
-              id = "password"
-              label= "Password"
-              icon = {faLock}
-              type="password"
-              placeholder="Enter your password..."
-              onChange={(e) => setPassword(e.target.value)}
-              aria-describedby="pwdnote"
-              required
-            />
-            <Button>Login</Button>
-          </form>
-          <p>
-            Dont have an account?
-            <Link to={"/signup"}>Sign up!</Link>
-          </p>
-        </div>
+          <FormField
+            id="password"
+            label="Password"
+            icon={faLock}
+            type="password"
+            placeholder="Enter your password..."
+            onChange={(e) => setPassword(e.target.value)}
+            aria-describedby="pwdnote"
+            required
+          />
+          <Button>Login</Button>
+        </form>
+        <p>
+          Dont have an account?
+          <Link to={"/signup"}>Sign up!</Link>
+        </p>
+      </div>
     </>
   );
 }

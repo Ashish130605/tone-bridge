@@ -5,7 +5,7 @@ export async function apiFetch(path, options={}){
     const headerObj = new Headers();
 
     if(path == "/auth/jwt/login") headerObj.append("Content-Type", "application/x-www-form-urlencoded");
-    
+    if(path == "/auth/register") headerObj.append("Content-Type", "application/json");
     const response = await fetch(BASE_URL+path, {
         credentials: 'include',
         headers: headerObj,

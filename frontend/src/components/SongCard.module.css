@@ -18,12 +18,10 @@
     justify-content: center;
 
 }
-.albumCover{
-    border: 2px solid lightgray;
+
+.albumCover img{
     border-radius: 10px;
-    width: 100%;
-    background-color: aliceblue;
-    aspect-ratio: 1 / 1;
+    box-shadow: 0 0 5px whitesmoke;
 }
 .cardContent{
     width: 100%;

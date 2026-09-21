@@ -41,6 +41,7 @@ async def recognise(file: UploadFile,
         title =  response_data["result"]["title"],
         artist = response_data["result"]["artist"],
         album = response_data["result"]["album"],
+        release_year = int(response_data["result"]["release_date"][0:4]),
         apple_link = response_data["result"]["apple_music"]["url"] if "apple_music" in response_data["result"] else None,
         spotify_link = response_data["result"]["spotify"]["external_urls"]["spotify"] if "spotify" in response_data["result"] else None,
     )

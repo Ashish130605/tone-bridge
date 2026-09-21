@@ -1,5 +1,5 @@
 import uuid
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from fastapi_users import schemas
 
 class UserRead(schemas.BaseUser[uuid.UUID]):
@@ -24,7 +24,7 @@ class Song(BaseModel):
     title: str
     artist: str
     album: str
-    #genre: str
+    release_year: int
     apple_link: str | None
     spotify_link: str | None
     album_cover_url: str | None = None

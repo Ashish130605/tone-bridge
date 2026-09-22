@@ -48,9 +48,9 @@ async def recognise(file: UploadFile,
     session.add(event)
     await session.commit()
     await session.refresh(event)
-    embedding =  await db.get_embedding(response_data["result"]["title"], response_data["result"]["artist"], session)
+    embedding =  await db.get_embedding(response_data["result"]["title"], response_data["result"]["artist"], int(response_data["result"]["release_date"][0:4]), session)
     if embedding is not None:
-        suguestions = await db.get_suggestions(embedding, session)
+        suguestions = await db.get_suggestions(embedding, response_data["result"]["title"] , session)
     else:
         suguestions = []
 

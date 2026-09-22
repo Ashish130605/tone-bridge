@@ -13,10 +13,10 @@ class UserUpdate(schemas.BaseUserUpdate):
 
 class SongsSuggestion(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    song_title: str
-    artists: str
-    album_name: str
-    spotify_url: str
+    title: str = Field(validation_alias="song_title")
+    artist: str = Field(validation_alias="artists")
+    album: str = Field(validation_alias="album_name")
+    spotify_link: str = Field(validation_alias="spotify_url")
 
 
 class Song(BaseModel):

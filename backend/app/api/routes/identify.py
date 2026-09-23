@@ -5,7 +5,7 @@ from app.core.config import settings
 from app.core.models import ListeningEvents, User
 from app.api.deps import  get_async_session
 from app.core.security import current_active_user
-from app.schemas import Song, SongsSuggestion
+from app.schemas import Song, SongsSuggestion, UserHistory
 from app.core import db
 
 
@@ -61,3 +61,12 @@ async def recognise(file: UploadFile,
     response.album_cover_url = images[1]["url"] if images else None
     response.suggestions = suggest_models
     return response
+
+@router.get("/history", response_model = list[UserHistory])
+async def history(user: User = Depends(current_active_user), session: AsyncSession = Depends(get_async_session)) -> list[UserHistory] | None:
+    if user.is_active:
+        user_history = await db.get_user_history(user.id, session)
+        if user_history is None:
+            return []
+        return [UserHistory.model_validate(u) for u in user_history]
+    return None

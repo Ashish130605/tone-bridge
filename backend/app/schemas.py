@@ -29,3 +29,12 @@ class Song(BaseModel):
     spotify_link: str | None
     album_cover_url: str | None = None
     suggestions: list[SongsSuggestion] = []
+
+class UserHistory(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    title: str
+    artist: str
+    album: str
+    release_year: int
+    apple_link: str | None
+    spotify_link: str | None

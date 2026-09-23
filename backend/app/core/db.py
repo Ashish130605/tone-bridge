@@ -1,8 +1,10 @@
+from uuid import UUID
+
 import numpy as np
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.models import Songs
+from app.core.models import Songs, ListeningEvents
 
 
 async def get_embedding(title: str, artist: str, year: int, session: AsyncSession) -> list[float] | None:
@@ -51,3 +53,8 @@ async def get_suggestions(embedding : list[float], title: str, session: AsyncSes
         if len(suggestions) == 3:
             break
     return suggestions
+
+async def get_user_history(user_id : UUID, session: AsyncSession) -> list[ListeningEvents] | None:
+    stmt = select(ListeningEvents).where(ListeningEvents.user_id == user_id)
+    result = (await session.execute(stmt)).scalars().all()
+    return list(result)

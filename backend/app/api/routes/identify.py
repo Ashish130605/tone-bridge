@@ -34,21 +34,23 @@ async def recognise(file: UploadFile,
     except Exception:
         raise HTTPException(status_code=503, detail="Service unavailable")
 
-    if response_data is None:
+    if response_data.get("result") is None:
         raise HTTPException(status_code=400, detail="Could not recognise audio")
+    release_prefix = (response_data["result"].get("release_date") or "")[0:4]
+    release_year = int(release_prefix) if release_prefix.isdigit() else 0
     event = ListeningEvents(
         user_id= user.id,
         title =  response_data["result"]["title"],
         artist = response_data["result"]["artist"],
         album = response_data["result"]["album"],
-        release_year = int(response_data["result"]["release_date"][0:4]),
+        release_year = release_year,
         apple_link = response_data["result"]["apple_music"]["url"] if "apple_music" in response_data["result"] else None,
         spotify_link = response_data["result"]["spotify"]["external_urls"]["spotify"] if "spotify" in response_data["result"] else None,
     )
     session.add(event)
     await session.commit()
     await session.refresh(event)
-    embedding =  await db.get_embedding(response_data["result"]["title"], response_data["result"]["artist"], int(response_data["result"]["release_date"][0:4]), session)
+    embedding =  await db.get_embedding(response_data["result"]["title"], response_data["result"]["artist"], release_year, session)
     if embedding is not None:
         suguestions = await db.get_suggestions(embedding, response_data["result"]["title"] , session)
     else:
@@ -63,10 +65,6 @@ async def recognise(file: UploadFile,
     return response
 
 @router.get("/history", response_model = list[UserHistory])
-async def history(user: User = Depends(current_active_user), session: AsyncSession = Depends(get_async_session)) -> list[UserHistory] | None:
-    if user.is_active:
-        user_history = await db.get_user_history(user.id, session)
-        if user_history is None:
-            return []
-        return [UserHistory.model_validate(u) for u in user_history]
-    return None
+async def history(user: User = Depends(current_active_user), session: AsyncSession = Depends(get_async_session)) -> list[UserHistory]:
+    user_history = await db.get_user_history(user.id, session)
+    return [UserHistory.model_validate(u) for u in user_history]

@@ -19,7 +19,13 @@
 
 }
 
-.listCard .albumCover {
+.listCard .albumCover{
+    display: none;
+}
+.listCard .otherLinks{
+    display: none;
+}
+.listCard .applelink{
     display: none;
 }
 
@@ -76,6 +82,10 @@
 .applelink{
     color:black;
     background-color: var(--Apple-pink , #FA2D48);
+}
+.otherLinks{
+    color: white;
+    background-color: #1E55FF;
 }
 
 .cardLinks a:hover{

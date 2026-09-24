@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./SongCard.module.css";
-import { faApple, faSpotify } from "@fortawesome/free-brands-svg-icons";
+import { faApple, faSpotify} from "@fortawesome/free-brands-svg-icons";
+import { faLink } from "@fortawesome/free-solid-svg-icons";
 export function SongCard({variant , data}) {
     const className = `${styles.baseCard} ${styles[variant]}`
     return(
@@ -21,7 +22,11 @@ export function SongCard({variant , data}) {
                     <a className ={styles.applelink} href={data?.apple_link} aria-label="Listen on Apple Music">
                         <FontAwesomeIcon icon={faApple} />
                     </a>
+                    <a  className={styles.otherLinks} href={data?.other_links} aria-label="Listen on other platforms">
+                        <FontAwesomeIcon icon={faLink} />
+                    </a>
+
                 </div>
         </article>
     );   
-}``
+}

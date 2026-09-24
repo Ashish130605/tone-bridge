@@ -46,6 +46,7 @@ async def recognise(file: UploadFile,
         release_year = release_year,
         apple_link = response_data["result"]["apple_music"]["url"] if "apple_music" in response_data["result"] else None,
         spotify_link = response_data["result"]["spotify"]["external_urls"]["spotify"] if "spotify" in response_data["result"] else None,
+        other_links = response_data["result"]["song_link"],
     )
     session.add(event)
     await session.commit()

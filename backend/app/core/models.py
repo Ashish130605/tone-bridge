@@ -23,6 +23,7 @@ class ListeningEvents(Base):
     artist = Column(String, nullable=False)
     album = Column(String,nullable=False)
     release_year = Column(Integer, nullable=False)
+    other_links = Column(String)
     apple_link = Column(String)
     spotify_link = Column(String)
     identified_at = Column(DateTime(timezone = True), nullable=False, default=lambda: datetime.now(UTC))

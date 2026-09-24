@@ -25,6 +25,7 @@ class Song(BaseModel):
     artist: str
     album: str
     release_year: int
+    other_links: str | None
     apple_link: str | None
     spotify_link: str | None
     album_cover_url: str | None = None
@@ -38,3 +39,4 @@ class UserHistory(BaseModel):
     release_year: int
     apple_link: str | None
     spotify_link: str | None
+    other_links: str | None

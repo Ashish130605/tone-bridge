@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import useAuth from "../../../hooks/useAuth";
-import { SongCard, Button} from "../../../components";
+import { SongCard, Button, Loading} from "../../../components";
 import styles from "./HomePage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMusic } from "@fortawesome/free-solid-svg-icons";
@@ -16,6 +16,7 @@ export function HomePage() {
   const [data, setData] = useState({});
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!audioStream) {
@@ -50,6 +51,10 @@ export function HomePage() {
                     } catch (e) {
                       setError(e.message);
                     }
+                    finally{
+                      setIsLoading(false);
+                    }
+              
           };
         })
         .catch((error) => {
@@ -66,12 +71,19 @@ export function HomePage() {
   const stopRecodingAndFetchData = async () => {
     mediaRecorder.stop();
     setIsRecording(false);
+    setIsLoading(true);
   };
 
   const resetStates = ()=>{
     setSuccess(false);
     setAudioStream(null);
     setAudioBlob(null);
+  }
+
+  if (isLoading){
+    return (
+      <Loading />
+    )
   }
 
   return (

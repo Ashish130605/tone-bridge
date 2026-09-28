@@ -1,6 +1,6 @@
 import httpx
 
-from app.core.config import settings
+from app.core.config import get_settings
 
 
 class AudDError(Exception):
@@ -27,13 +27,13 @@ _AUDD_ERROR_MAP: dict[int, tuple[int, str]] = {
 async def identify_song(read_bytes: bytes) -> dict:
     files = {"file": read_bytes}
     data = {
-        "api_token": settings.AUDD_API_TOKEN,
+        "api_token": get_settings().AUDD_API_TOKEN,
         "return": "apple_music,spotify",
     }
 
     try:
         async with httpx.AsyncClient() as client:
-            response = await client.post(settings.AUDD_API_URL, data=data, files=files)
+            response = await client.post(get_settings().AUDD_API_URL, data=data, files=files)
             response.raise_for_status()
             payload = response.json()
     except httpx.HTTPError:

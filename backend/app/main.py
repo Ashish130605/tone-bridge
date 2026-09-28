@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from app.api.main import api_router
 from app.api.deps import create_db_and_tables
 from fastapi.middleware.cors import CORSMiddleware
-from app.core.config import settings
+from app.core.config import get_settings
 
 
 @asynccontextmanager
@@ -14,7 +14,7 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(lifespan=lifespan)
-origins = [settings.FRONTEND_URL]
+origins = [get_settings().FRONTEND_URL]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,

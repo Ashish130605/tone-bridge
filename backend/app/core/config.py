@@ -1,3 +1,4 @@
+from anyio.functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import PostgresDsn,computed_field
 
@@ -29,4 +30,6 @@ class Settings(BaseSettings):
             path=self.POSTGRES_DB
         )
 
-settings = Settings()
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()

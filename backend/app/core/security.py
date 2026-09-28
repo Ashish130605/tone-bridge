@@ -5,15 +5,15 @@ from fastapi_users import UUIDIDMixin, BaseUserManager, schemas, models, Invalid
 from fastapi_users.authentication import JWTStrategy, AuthenticationBackend, CookieTransport
 
 from app.api.deps import get_user_db
-from app.core.config import settings
+from app.core.config import get_settings
 from app.core.models import User
 import re
 
 PWD_REGEX = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
-    reset_password_token_secret = settings.JWT_SECRET
-    verification_token_secret  = settings.JWT_SECRET
+    reset_password_token_secret = get_settings().JWT_SECRET
+    verification_token_secret  = get_settings().JWT_SECRET
 
     async def validate_password(
         self, password: str, user: schemas.UC | models.UP
@@ -28,7 +28,7 @@ cookie_transport = CookieTransport(cookie_name="access_token",
                                    cookie_max_age=3600)
 
 def get_jwt_strategy() -> JWTStrategy:
-    return JWTStrategy(secret=settings.JWT_SECRET, lifetime_seconds=3600)
+    return JWTStrategy(secret=get_settings().JWT_SECRET, lifetime_seconds=3600)
 
 auth_backend = AuthenticationBackend(
     name="jwt",

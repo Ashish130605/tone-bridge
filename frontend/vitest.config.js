@@ -1,0 +1,15 @@
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFiles: "./tests/setup.js",
+    include: ["tests/**/*.{test,spec}.{js,jsx}"],
+    // CSS-module class names come back as their plain names (styles.button === "button"),
+    // so tests can assert on variant classes without hashing.
+    css: { modules: { classNameStrategy: "non-scoped" } },
+  },
+});

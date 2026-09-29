@@ -20,10 +20,15 @@ dependencies = [
     "respx>=0.23.1",
     "scikit-learn>=1.9.0",
     "sqlmodel>=0.0.39",
+    "testcontainers[postgres]>=4.15.0",
     "uvicorn[standard]>=0.52.0",
 ]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
 testpaths = ["tests"]
 pythonpath = ["."]
+markers = [
+    "integration: DB tests needing Docker (testcontainers Postgres + pgvector)",
+]

@@ -2,3 +2,8 @@
     list-style-type: none;
     padding :0;
 }
+
+.error{
+    color: #d32f2f;
+    text-align: center;
+}

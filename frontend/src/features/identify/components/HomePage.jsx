@@ -1,89 +1,51 @@
-import { useState, useEffect } from "react";
-import useAuth from "../../../hooks/useAuth";
-import { SongCard, Button, Loading} from "../../../components";
+import { useState } from "react";
+import { SongCard, Button, Loading } from "../../../components";
 import styles from "./HomePage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMusic } from "@fortawesome/free-solid-svg-icons";
 import { apiFetch } from "../../../lib/api-client";
+import { useRecorder } from "../../../hooks/useRecorder";
 
 export function HomePage() {
-  const { auth } = useAuth();
-  const [isRecording, setIsRecording] = useState(false);
-  const [audioStream, setAudioStream] = useState(null);
-  const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [audioBlob, setAudioBlob] = useState();
-  const [url, setUrl] = useState(null)
-  const [data, setData] = useState({});
+  const { isRecording, error: recorderError, start, stop } = useRecorder();
+  const [data, setData] = useState(null);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (!audioStream) {
-      navigator.mediaDevices
-        .getUserMedia({ audio: true })
-        .then((stream) => {
-          setAudioStream(stream);
-          const mediaRecorder = new MediaRecorder(stream);
-          setMediaRecorder(mediaRecorder);
-          let audio;
-
-          mediaRecorder.ondataavailable = (event) => {
-            if (event.data.size > 0) {
-              audio = [event.data];
-            }
-          };
-
-          mediaRecorder.onstop = async () => {
-            const b = new Blob(audio, { type: "audio/wav" });
-            setAudioBlob(b);
-            const audioUrl = URL.createObjectURL(b);
-            setUrl(audioUrl);
-            const formData = new FormData();
-            formData.append("file", b, "recording.wav");
-            try {
-                    const response = await apiFetch("/api/recognise", {
-                        method: "POST",
-                        body: formData,
-                    });
-                    setData(response);
-                    setSuccess(true);
-                    } catch (e) {
-                      setError(e.message);
-                    }
-                    finally{
-                      setIsLoading(false);
-                    }
-              
-          };
-        })
-        .catch((error) => {
-          alert("Error accessing microphone:", error);
-        });
-    }
-  }, [audioStream]);
-
-  const startRecording = () => {
-    mediaRecorder.start();
-    setIsRecording(true);
+  const handleRecord = async () => {
+    setError("");
+    await start();
   };
 
-  const stopRecodingAndFetchData = async () => {
-    mediaRecorder.stop();
-    setIsRecording(false);
+  const handleStopAndIdentify = async () => {
     setIsLoading(true);
+    setError("");
+    try {
+      const blob = await stop();
+      const formData = new FormData();
+      formData.append("file", blob, "recording.wav");
+      const response = await apiFetch("/api/recognise", {
+        method: "POST",
+        body: formData,
+      });
+      setData(response);
+      setSuccess(true);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const resetStates = ()=>{
+  const resetStates = () => {
     setSuccess(false);
-    setAudioStream(null);
-    setAudioBlob(null);
-  }
+    setData(null);
+    setError("");
+  };
 
-  if (isLoading){
-    return (
-      <Loading />
-    )
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -92,30 +54,33 @@ export function HomePage() {
         <section>
           <h3>Song identified</h3>
 
-          <SongCard data={data}/>
+          <SongCard data={data} />
 
           <hr />
 
           <p>You might also like.</p>
           <ul className={styles["suggestions-list"]}>
-            {data?.suggestions.map((suggestions) => (
-              <li key={suggestions.title}>
-                  <SongCard variant="listCard" data={suggestions} />
-                  <hr />
+            {data?.suggestions?.map((suggestion) => (
+              <li key={suggestion.title}>
+                <SongCard variant="listCard" data={suggestion} />
+                <hr />
               </li>
-
             ))}
-
           </ul>
-          <Button onClick= {resetStates}>Guess Again</Button>
+          <Button onClick={resetStates}>Guess Again</Button>
         </section>
-      
       ) : (
         <section>
+          {(error || recorderError) && (
+            <p role="alert" className={styles.error}>
+              {error || recorderError}
+            </p>
+          )}
           <Button
-            variant = {isRecording ? 'mainPageButtonActive': 'mainPageButton'} onClick={!isRecording ? startRecording : stopRecodingAndFetchData}
+            variant={isRecording ? "mainPageButtonActive" : "mainPageButton"}
+            onClick={!isRecording ? handleRecord : handleStopAndIdentify}
           >
-            <FontAwesomeIcon icon={faMusic} size="2x"/>
+            <FontAwesomeIcon icon={faMusic} size="2x" />
           </Button>
         </section>
       )}

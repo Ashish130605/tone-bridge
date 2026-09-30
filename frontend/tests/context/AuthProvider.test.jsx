@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 
-vi.mock("../src/lib/api-client", () => ({ apiFetch: vi.fn() }));
+vi.mock("../../src/lib/api-client", () => ({ apiFetch: vi.fn() }));
 
 import { AuthProvider } from "../../src/features/auth/context/AuthProvider";
 import useAuth from "../../src/hooks/useAuth";

@@ -6,8 +6,8 @@ import userEvent from "@testing-library/user-event";
 const { recorder } = vi.hoisted(() => ({
   recorder: { isRecording: false, error: "", start: vi.fn(), stop: vi.fn() },
 }));
-vi.mock("../src/hooks/useRecorder", () => ({ useRecorder: () => recorder }));
-vi.mock("../src/lib/api-client", () => ({ apiFetch: vi.fn() }));
+vi.mock("../../../src/hooks/useRecorder", () => ({ useRecorder: () => recorder }));
+vi.mock("../../../src/lib/api-client", () => ({ apiFetch: vi.fn() }));
 
 import { HomePage } from "../../../src/features/identify/components/HomePage";
 import { apiFetch } from "../../../src/lib/api-client";

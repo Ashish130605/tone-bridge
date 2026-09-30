@@ -7,7 +7,7 @@ vi.mock("react-router", async (importOriginal) => {
   const actual = await importOriginal();
   return { ...actual, Navigate: ({ to }) => <div data-testid="navigate">{to}</div> };
 });
-vi.mock("../src/lib/api-client", () => ({ apiFetch: vi.fn() }));
+vi.mock("../../../src/lib/api-client", () => ({ apiFetch: vi.fn() }));
 
 import { SignUp } from "../../../src/features/auth/components/Signup";
 import { apiFetch } from "../../../src/lib/api-client";

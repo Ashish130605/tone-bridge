@@ -10,10 +10,10 @@ vi.mock("react-router", async (importOriginal) => {
   const actual = await importOriginal();
   return { ...actual, useNavigate: () => mockNavigate };
 });
-vi.mock("../src/hooks/useAuth", () => ({
+vi.mock("../../src/hooks/useAuth", () => ({
   default: () => ({ setAuth: mockSetAuth }),
 }));
-vi.mock("../src/lib/api-client", () => ({ apiFetch: vi.fn() }));
+vi.mock("../../src/lib/api-client", () => ({ apiFetch: vi.fn() }));
 
 import { NavBar } from "../../src/components/NavBar";
 import { apiFetch } from "../../src/lib/api-client";

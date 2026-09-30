@@ -9,8 +9,8 @@ vi.mock("react-router", async (importOriginal) => {
 });
 vi.mock("../src/lib/api-client", () => ({ apiFetch: vi.fn() }));
 
-import { SignUp } from "../src/features/auth/components/Signup";
-import { apiFetch } from "../src/lib/api-client";
+import { SignUp } from "../../../src/features/auth/components/Signup";
+import { apiFetch } from "../../../src/lib/api-client";
 
 const EMAIL = "user@example.com";
 const PASSWORD = "Str0ng@Pass";

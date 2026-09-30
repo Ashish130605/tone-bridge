@@ -15,8 +15,8 @@ vi.mock("../src/hooks/useAuth", () => ({
 }));
 vi.mock("../src/lib/api-client", () => ({ apiFetch: vi.fn() }));
 
-import { NavBar } from "../src/components/NavBar";
-import { apiFetch } from "../src/lib/api-client";
+import { NavBar } from "../../src/components/NavBar";
+import { apiFetch } from "../../src/lib/api-client";
 
 function renderNavBar() {
   return render(

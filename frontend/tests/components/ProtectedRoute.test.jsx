@@ -5,7 +5,7 @@ import { MemoryRouter, Routes, Route } from "react-router";
 const mockUseAuth = vi.fn();
 vi.mock("../src/hooks/useAuth", () => ({ default: () => mockUseAuth() }));
 
-import ProtectedRoute from "../src/components/ProtectedRoute";
+import ProtectedRoute from "../../src/components/ProtectedRoute";
 
 function renderAt(path = "/") {
   return render(

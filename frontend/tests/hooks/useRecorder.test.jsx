@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook, act, waitFor } from "@testing-library/react";
-import { useRecorder } from "../src/hooks/useRecorder";
+import { useRecorder } from "../../src/hooks/useRecorder";
 
 // A minimal fake MediaRecorder: start() records, stop() emits one chunk then onstop.
 class FakeMediaRecorder {
@@ -29,7 +29,7 @@ beforeEach(() => {
   getUserMedia.mockResolvedValue({ getTracks: () => [{ stop: trackStop }] });
 
   vi.stubGlobal("MediaRecorder", FakeMediaRecorder);
-  Object.defineProperty(global.navigator, "mediaDevices", {
+  Object.defineProperty(globalThis.navigator, "mediaDevices", {
     value: { getUserMedia },
     configurable: true,
     writable: true,

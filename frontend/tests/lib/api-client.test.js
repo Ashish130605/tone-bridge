@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { apiFetch } from "../src/lib/api-client";
+import { apiFetch } from "../../src/lib/api-client";
 
 function fakeResponse({ status = 200, ok = true, json = {} } = {}) {
   return { status, ok, json: async () => json };

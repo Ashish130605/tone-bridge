@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { FormField } from "../src/components/FormField";
+import { FormField } from "../../src/components/FormField";
 
 describe("FormField", () => {
   it("associates the label with the input via id/htmlFor", () => {

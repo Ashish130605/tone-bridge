@@ -9,8 +9,8 @@ const { recorder } = vi.hoisted(() => ({
 vi.mock("../src/hooks/useRecorder", () => ({ useRecorder: () => recorder }));
 vi.mock("../src/lib/api-client", () => ({ apiFetch: vi.fn() }));
 
-import { HomePage } from "../src/features/identify/components/HomePage";
-import { apiFetch } from "../src/lib/api-client";
+import { HomePage } from "../../../src/features/identify/components/HomePage";
+import { apiFetch } from "../../../src/lib/api-client";
 
 const RESULT = {
   title: "As",

@@ -14,8 +14,8 @@ vi.mock("../src/hooks/useAuth", () => ({
 }));
 vi.mock("../src/lib/api-client", () => ({ apiFetch: vi.fn() }));
 
-import { Login } from "../src/features/auth/components/Login";
-import { apiFetch } from "../src/lib/api-client";
+import { Login } from "../../../src/features/auth/components/Login";
+import { apiFetch } from "../../../src/lib/api-client";
 
 function renderLogin() {
   return render(

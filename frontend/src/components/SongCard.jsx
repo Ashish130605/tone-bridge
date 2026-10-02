@@ -7,7 +7,7 @@ export function SongCard({variant , data}) {
     return(
         <article className={className}>
                 <div className={styles.albumCover}>
-                    <img src={data?.album_cover_url} alt="Album Cover"/>
+                    <img src={data?.album_cover_url ? data?.album_cover_url : "/placeholder.svg"} alt="Album Cover" />
                 </div>
                 
                 <div className={styles.cardContent}>

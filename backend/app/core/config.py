@@ -1,11 +1,13 @@
 from anyio.functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import PostgresDsn,computed_field
+import socket
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file="../.env",
-        env_file_encoding="utf-8"
+        env_file_encoding="utf-8",
+        extra='ignore'
     )
     JWT_SECRET : str
     AUDD_API_TOKEN : str
@@ -17,6 +19,12 @@ class Settings(BaseSettings):
     POSTGRES_USER : str
     POSTGRES_PASSWORD : str
     POSTGRES_DB : str
+    POSTGRES_ENDPOINT : str
+
+    @computed_field
+    @property
+    def POSTGREST_IPV4_HOST(self) -> str | int:
+        return socket.getaddrinfo(self.POSTGRES_SERVER, self.POSTGRES_PORT, socket.AF_INET, socket.SOCK_STREAM)[0][4][0]
 
     @computed_field
     @property

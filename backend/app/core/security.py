@@ -24,8 +24,10 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
             )
 
 cookie_transport = CookieTransport(cookie_name="access_token",
-                                   cookie_secure=True,
-                                   cookie_max_age=3600)
+                                   cookie_secure=get_settings().COOKIE_SECURE,
+                                   cookie_samesite="none",
+                                   cookie_domain=get_settings().COOKIE_DOMIAN,
+                                   cookie_max_age=get_settings().COOKIE_MAXAGE)
 
 def get_jwt_strategy() -> JWTStrategy:
     return JWTStrategy(secret=get_settings().JWT_SECRET, lifetime_seconds=3600)

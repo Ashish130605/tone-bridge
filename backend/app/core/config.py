@@ -14,6 +14,10 @@ class Settings(BaseSettings):
     AUDD_API_URL: str
     FRONTEND_URL : str
 
+    COOKIE_DOMIAN : str | None = None
+    COOKIE_SECURE: bool = False
+    COOKIE_MAXAGE: int = 3600
+
     POSTGRES_SERVER : str
     POSTGRES_PORT : int = 5432
     POSTGRES_USER : str

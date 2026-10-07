@@ -1,12 +1,14 @@
 from fastapi import Depends
 from fastapi_users.db import SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
+from sqlalchemy.pool import NullPool
 from collections.abc import AsyncGenerator
 from app.core.models import Base, User
 from app.core.config import get_settings
 
 engine = create_async_engine(str(get_settings().SQLALCHEMY_DATABASE_URI),
                              future=True ,
+                             poolclass=NullPool,
                              connect_args={"host":get_settings().POSTGREST_IPV4_HOST,
                                            "ssl":"require",
                                            "server_settings" : {
